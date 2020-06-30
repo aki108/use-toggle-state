@@ -1,0 +1,28 @@
+.button {
+  --primary: #275efe;
+
+  display: block;
+  cursor: pointer;
+  position: relative;
+  border: 0;
+  padding: 0.8rem 1rem;
+  min-width: 10rem;
+  text-align: center;
+  margin: 0;
+  line-height: 2.4rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1.4rem;
+  background: none;
+  outline: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  opacity: 0.6;
+}
+
+.button.primary {
+  color: #fff;
+  background: var(--primary);
+}
