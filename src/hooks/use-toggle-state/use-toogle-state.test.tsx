@@ -1,34 +1,90 @@
-import { renderHook, act } from '@testing-library/react-hooks'
+import React, { useEffect } from 'react'
+import { renderHook } from '@testing-library/react-hooks'
+import { render, act, cleanup, fireEvent } from '@testing-library/react'
 
 import { useToggleState } from '.'
 
+afterEach(() => {
+  cleanup()
+})
+
 describe('useToggleState', () => {
   it('should return the initial state', () => {
-    const initial = 1
+    const defaultValue = 1
 
     const {
       result: { current },
-    } = renderHook(() => useToggleState(initial))
+    } = renderHook(() => useToggleState(defaultValue))
     const [expected] = current
 
-    expect(expected).toBe(initial)
+    expect(expected).toBe(defaultValue)
   })
 
-  it('should return pure value', () => {
-    const initial = 1
-    const expectedValue = 45
+  it('Component should rerender from change to state', () => {
+    const defaultValue = 1
+    const newValue = 45
+    const testComponentId = 'tcid'
+    const testButtonId = 'tbid'
 
-    const {
-      result: { current },
-    } = renderHook(() => useToggleState(initial))
-    const [expected, setValue] = current
+    const Component = () => {
+      const [actualValue, changeValue] = useToggleState(defaultValue)
+      return (
+        <div>
+          <span data-testid={testComponentId}>{actualValue}</span>
+          <button
+            onClick={(_) => changeValue(newValue)}
+            data-testid={testButtonId}
+          >
+            Test Button
+          </button>
+        </div>
+      )
+    }
 
-    act(() => {
-      setValue(expectedValue)
-    })
+    const testComponent = render(<Component />)
 
-    console.log(current)
+    expect(
+      parseFloat(testComponent.getByTestId(testComponentId).textContent)
+    ).toBe(defaultValue)
 
-    expect(expected).toBe(expectedValue)
+    fireEvent.click(testComponent.getByTestId(testButtonId))
+
+    expect(
+      parseFloat(testComponent.getByTestId(testComponentId).textContent)
+    ).toBe(newValue)
+  })
+
+  it('Hook should return default value if range is not n > 1', () => {
+    const defaultValue = 15
+    const newValue = -4
+    const testComponentId = 'tcid'
+    const testButtonId = 'tbid'
+
+    const Component = () => {
+      const [actualValue, changeValue] = useToggleState(defaultValue)
+      return (
+        <div>
+          <span data-testid={testComponentId}>{actualValue}</span>
+          <button
+            onClick={(_) => changeValue(newValue)}
+            data-testid={testButtonId}
+          >
+            Test Button
+          </button>
+        </div>
+      )
+    }
+
+    const testComponent = render(<Component />)
+
+    expect(
+      parseFloat(testComponent.getByTestId(testComponentId).textContent)
+    ).toBe(defaultValue)
+
+    fireEvent.click(testComponent.getByTestId(testButtonId))
+
+    expect(
+      parseFloat(testComponent.getByTestId(testComponentId).textContent)
+    ).toBe(defaultValue)
   })
 })
