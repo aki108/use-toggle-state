@@ -12,13 +12,14 @@ type Inputs = {
 }
 
 function App() {
-  const [value, setValue] = useToggleState(1)
+  const data = useToggleState(1)
   const { register, handleSubmit, watch, errors } = useForm<Inputs>()
 
   const onSubmit = (values: Inputs) => {
-    //@ts-ignore
-    setValue(values.count)
+    data.setValue(values.count)
   }
+
+  console.log(data)
 
   const countValue = useMemo(() => {
     return watch('count')
@@ -46,7 +47,7 @@ function App() {
           </form>
 
           <div>
-            <p className="form-value">Current value: {value}</p>
+            <p className="form-value">Current value: {data.value}</p>
             <p className="form-value">Next value: {countValue}</p>
           </div>
         </Card>
