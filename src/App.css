@@ -1,38 +1,62 @@
-.App {
+:root {
+  --primary: #275efe;
+  --main-color: #e1e6f9;
+  --main-font: Montserrat;
+}
+
+html {
+  font-size: 10px;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: inherit;
+}
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: var(--main-font), Arial, Helvetica, sans-serif;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  height: 100%;
+  background-color: var(--main-color);
+}
+
+.caption {
+  margin-top: 0;
+  font-weight: 500;
+  font-size: 2.5rem;
+}
+
+.caption.center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form-container {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.form-container .action {
+  display: flex;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-container .form-value {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  margin-top: 1rem;
+  font-weight: 600;
 }
